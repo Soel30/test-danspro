@@ -1,14 +1,44 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "module": "CommonJS",
-        "rootDir": "src",
-        "outDir": "build",
-        "esModuleInterop": true,
+        "typeRoots": [
+            "./typings"
+        ],
+        "target": "es6",
+        "module": "commonjs",
+        "sourceMap": true,
+        "outDir": "./dist/",
+        "rootDir": "./src",
+        "removeComments": true,
         "strict": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "baseUrl": ".",
-    }
+        "baseUrl": "./",
+        "paths": {
+            "@config/*": [
+                "src/config/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
+            "@middlewares/*": [
+                "src/middlewares/*"
+            ],
+            "@routes/*": [
+                "src/routes/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@root/*": [
+                "src/*"
+            ]
+        },
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "./node_modules"
+    ]
 }

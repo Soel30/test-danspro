@@ -1,5 +1,6 @@
 import { ConnectOptions, connect } from "mongoose";
-import config from "./config";
+import config from "@config/env";
+import logger from "@utils/logger";
 
 type ConnectionOptionsExtend = {
   useNewUrlParser: boolean;
@@ -12,9 +13,10 @@ const ConnectDB = async () => {
     const options: ConnectOptions & ConnectionOptionsExtend =
       config.database.options;
     await connect(mongoURI, options);
-    console.log("MongoDB Connected...");
+    logger.info("Database connected successfully");
   } catch (error) {
-    console.log(error);
+    logger.error(error);
+    throw error;
   }
 };
 
