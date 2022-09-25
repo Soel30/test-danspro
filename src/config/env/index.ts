@@ -16,6 +16,7 @@ interface IConfig {
   };
   authentication: {
     jwtSecret: any;
+    jwtExpired: any;
   };
 }
 
@@ -61,6 +62,7 @@ const ConfigData: IConfig = {
   },
   authentication: {
     jwtSecret: process.env.JWT_SECRET,
+    jwtExpired: process.env.JWT_EXPIRED || "1h",
   },
 };
 
