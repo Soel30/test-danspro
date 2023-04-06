@@ -8,11 +8,11 @@ interface IConfig {
   jsdocOptions: any;
   baseUrl: any;
   database: {
-    connectionString: any;
-    options: {
-      useNewUrlParser: boolean;
-      useUnifiedTopology: boolean;
-    };
+    username: any;
+    password: any;
+    host: any;
+    port: any;
+    name: any;
   };
   authentication: {
     jwtSecret: any;
@@ -54,11 +54,11 @@ const ConfigData: IConfig = {
     apis: ["./src/components/**/routes.ts"],
   },
   database: {
-    connectionString: DB_CONNECTION_STRING,
-    options: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    name: process.env.DB_NAME,
   },
   authentication: {
     jwtSecret: process.env.JWT_SECRET,

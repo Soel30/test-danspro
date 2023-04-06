@@ -1,21 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
 import Routes from "@routes/index";
 import ConfigData from "@config/env";
+import cors from "cors";
 const app: express.Application = express();
 
-const specs = swaggerJsdoc(ConfigData.jsdocOptions);
-app.use(
-  "/docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs, {
-    explorer: true,
-    customCss:
-      ".swagger-container .swagger-ui { max-width: 800px; margin: 0 auto; }",
-  })
-);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+    origin: "*",
+}));
 Routes(app);
 
 app.set("port", ConfigData.port);

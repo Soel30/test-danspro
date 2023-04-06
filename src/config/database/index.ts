@@ -1,23 +1,19 @@
-import { ConnectOptions, connect } from "mongoose";
-import config from "@config/env";
-import logger from "@utils/logger";
+import { Sequelize } from 'sequelize'
+import ConfigData from '@config/env'
 
-type ConnectionOptionsExtend = {
-  useNewUrlParser: boolean;
-  useUnifiedTopology: boolean;
-};
+const sequelize = new Sequelize(
+    ConfigData.database.name,
+    ConfigData.database.username,
+    ConfigData.database.password,
+    {
+        host: ConfigData.database.host,
+        port: ConfigData.database.port,
+        dialect: 'mysql',
+        logging: false,
+        define: {
+            timestamps: true,
+        },
+    }
+)
 
-const ConnectDB = async () => {
-  try {
-    const mongoURI: string = config.database.connectionString;
-    const options: ConnectOptions & ConnectionOptionsExtend =
-      config.database.options;
-    await connect(mongoURI, options);
-    logger.info("Database connected successfully");
-  } catch (error) {
-    logger.error(error);
-    throw error;
-  }
-};
-
-export default ConnectDB;
+export default sequelize

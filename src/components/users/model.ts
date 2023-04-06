@@ -1,53 +1,32 @@
-import { Schema, Document, Model, model } from "mongoose";
-import mongooseUniqueValidator from "mongoose-unique-validator";
-import { mongoosePagination, Pagination } from "mongoose-paginate-ts";
+import { Sequelize, Model, DataTypes } from 'sequelize'
+import sequelize from '@config/database';
+import { TokenAuth } from '@components/auth/model';
 
-export interface IUser extends Document {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  role: string;
-  status: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const userSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-    },
-    status: {
-      type: Number,
-      default: 1,
-    },
+export const User = sequelize.define("User", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-  { timestamps: true }
-);
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+    unique: true,
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
 
-userSchema.plugin(mongooseUniqueValidator);
-userSchema.plugin(mongoosePagination);
-
-export const User: Pagination<IUser> = model<IUser, Pagination<IUser>>(
-  "User",
-  userSchema
-);
+User.hasMany(TokenAuth, {
+  foreignKey: 'user_id',
+  as: 'tokens',
+});
